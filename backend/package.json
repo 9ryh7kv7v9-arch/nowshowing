@@ -1,0 +1,20 @@
+{
+  "name": "showtimes-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cinema Showtimes REST API (Express + SQLite) with a vanilla JS client",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --no-warnings=ExperimentalWarning server.js",
+    "dev": "node --no-warnings=ExperimentalWarning --watch server.js",
+    "reset-db": "node -e \"require('fs').rmSync('showtimes.sqlite',{force:true});console.log('database removed, it will be recreated on next start')\""
+  },
+  "engines": {
+    "node": ">=22.13"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
