@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NowShowing · Showtimes Manager</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="topbar">
+    <div class="brand">Now<span>Showing</span></div>
+    <div class="tools">
+      <input type="search" id="search" placeholder="Search movies…" aria-label="Search movies" />
+      <button id="new-btn" class="btn btn-accent">+ New showtime</button>
+    </div>
+  </nav>
+
+  <section class="summary" id="summary"></section>
+
+  <main id="grid" class="grid" aria-live="polite">
+    <p class="placeholder">Loading showtimes…</p>
+  </main>
+
+  <dialog id="editor">
+    <form id="showtime-form" method="dialog" novalidate>
+      <header>
+        <h2 id="editor-title">New showtime</h2>
+        <button type="button" class="icon-btn" id="close-btn" aria-label="Close">✕</button>
+      </header>
+
+      <div class="fields">
+        <label class="span-2">Movie title
+          <input name="movie_title" maxlength="200" required />
+        </label>
+        <label class="span-2">Director
+          <input name="director" maxlength="120" placeholder="optional" />
+        </label>
+        <label>Age rating
+          <select name="age_rating">
+            <option>G</option><option selected>PG</option><option>PG-13</option><option>16</option><option>18</option>
+          </select>
+        </label>
+        <label>Format
+          <select name="format">
+            <option selected>2D</option><option>3D</option><option>IMAX</option>
+          </select>
+        </label>
+        <label>Duration (min)
+          <input name="duration_min" type="number" min="1" max="400" required />
+        </label>
+        <label>Screen
+          <input name="screen" type="number" min="1" max="10" required />
+        </label>
+        <label>Starts at
+          <input name="starts_at" type="datetime-local" required />
+        </label>
+        <label>Price (ZMW)
+          <input name="price" type="number" min="0" step="0.01" required />
+        </label>
+      </div>
+
+      <ul id="form-errors" class="form-errors"></ul>
+
+      <footer>
+        <button type="button" class="btn btn-ghost" id="cancel-btn">Cancel</button>
+        <button type="submit" class="btn btn-accent" id="save-btn">Save</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

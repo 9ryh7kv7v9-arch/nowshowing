@@ -1,0 +1,63 @@
+{
+  "info": {
+    "name": "NowShowing – Showtimes API",
+    "description": "Run the requests in order: Create → List → Get → Update → Delete.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "host", "value": "http://localhost:5000" },
+    { "key": "showtimeId", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Create showtime (POST)",
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 201', () => pm.response.to.have.status(201));",
+        "const body = pm.response.json();",
+        "pm.test('success is true', () => pm.expect(body.success).to.be.true);",
+        "pm.collectionVariables.set('showtimeId', body.data.id);"
+      ]}}],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{host}}/api/showtimes",
+        "body": { "mode": "raw", "raw": "{\n  \"movie_title\": \"Sinners\",\n  \"director\": \"Ryan Coogler\",\n  \"age_rating\": \"16\",\n  \"duration_min\": 137,\n  \"screen\": 5,\n  \"format\": \"IMAX\",\n  \"starts_at\": \"2026-10-27 20:00\",\n  \"price\": 135\n}" }
+      }
+    },
+    {
+      "name": "List all showtimes (GET)",
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 200', () => pm.response.to.have.status(200));",
+        "pm.test('data is an array', () => pm.expect(pm.response.json().data).to.be.an('array'));"
+      ]}}],
+      "request": { "method": "GET", "url": "{{host}}/api/showtimes" }
+    },
+    {
+      "name": "Get one showtime (GET by id)",
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 200', () => pm.response.to.have.status(200));"
+      ]}}],
+      "request": { "method": "GET", "url": "{{host}}/api/showtimes/{{showtimeId}}" }
+    },
+    {
+      "name": "Update showtime (PUT)",
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 200', () => pm.response.to.have.status(200));",
+        "pm.test('price changed', () => pm.expect(pm.response.json().data.price).to.eql(110));"
+      ]}}],
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{host}}/api/showtimes/{{showtimeId}}",
+        "body": { "mode": "raw", "raw": "{\n  \"movie_title\": \"Sinners\",\n  \"director\": \"Ryan Coogler\",\n  \"age_rating\": \"18\",\n  \"duration_min\": 137,\n  \"screen\": 6,\n  \"format\": \"2D\",\n  \"starts_at\": \"2026-10-28 21:00\",\n  \"price\": 110\n}" }
+      }
+    },
+    {
+      "name": "Delete showtime (DELETE)",
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Status 200', () => pm.response.to.have.status(200));"
+      ]}}],
+      "request": { "method": "DELETE", "url": "{{host}}/api/showtimes/{{showtimeId}}" }
+    }
+  ]
+}
